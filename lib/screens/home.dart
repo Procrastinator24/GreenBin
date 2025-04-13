@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import '../widgets/CustomButton.dart';
 import '../screens/login_screen.dart';
+import '../screens/sign_in.dart';
 
 
 class Home_screen extends StatelessWidget {
   const Home_screen({super.key});
- @override
-Widget build (BuildContext context){
+  @override
+  Widget build (BuildContext context){
     return Scaffold(
             body:
             Row(
@@ -38,7 +39,10 @@ Widget build (BuildContext context){
                         children: [
                             CustomButton(
                                 text: "Создать аккаунт", width: 249,
-                                onPressed: ()=>{}, 
+                                onPressed: ()=>{
+                                  Navigator.push(context, 
+                                  MaterialPageRoute(builder: (context) => const SignUpScreen()))
+                                }, 
                             ),
                             CustomButton(
                               text: "Вход", width: 249,
