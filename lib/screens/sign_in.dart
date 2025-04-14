@@ -11,13 +11,18 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreen extends State<SignUpScreen> {
   final ValueNotifier<bool> _termsAccepted = ValueNotifier<bool>(false);
+
   bool isHiddenPassword = true;
+  bool _isEmailValid = false;
+  bool _isPasswordValid = false;
+  bool _isPasswordReapeatValid = false;
+  bool isChecked = true;
+
   TextEditingController emailTextInputController = TextEditingController();
   TextEditingController nameTextInputController = TextEditingController();
   TextEditingController passwordTextInputController = TextEditingController();
-  bool isChecked = true;
-  TextEditingController passwordTextRepeatInputController =
-      TextEditingController();
+  TextEditingController passwordTextRepeatInputController =TextEditingController();
+
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -91,11 +96,13 @@ class _SignUpScreen extends State<SignUpScreen> {
           key: formKey,
           child: Column(
             children: [
+              // Поле Ввода Имени
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 autocorrect: false,
                 controller: nameTextInputController,
                 decoration: InputDecoration(
+                  label: Text('Имя'),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -104,15 +111,37 @@ class _SignUpScreen extends State<SignUpScreen> {
                 ),
               ),
               const SizedBox(height: 30),
+
+              // Поле Email
               TextFormField(
                 keyboardType: TextInputType.text,
                 autocorrect: true,
                 controller: emailTextInputController,
-                validator: (email) =>
-                    email != null && !EmailValidator.validate(email)
-                        ? 'Введите правильный Email'
-                        : null,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                onChanged: (email) {
+                  setState(() {
+                    _isEmailValid = EmailValidator.validate(email);
+                  });
+                },
+                validator: (email){
+                  if (email != null && !EmailValidator.validate(email)){
+                    return 'Введите правильный Email';
+                  }
+                  else{
+                    return null;
+                  }
+                },
+                // validator: (email) =>
+                //     email != null && !EmailValidator.validate(email)
+                //         ? 'Введите правильный Email'
+                //         : null,
                 decoration:  InputDecoration(
+                  label: Text('E-mail'),
+                  fillColor: emailTextInputController.text.isEmpty 
+                          ?Colors.grey[200]
+                          : _isEmailValid
+                            ? Colors.green[50]
+                            : Colors.red[50],
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
@@ -120,20 +149,23 @@ class _SignUpScreen extends State<SignUpScreen> {
                 ),
               ),
               const SizedBox(height: 30),
+              //Пароль
               TextFormField(
                 autocorrect: false,
                 controller: passwordTextInputController,
                 obscureText: isHiddenPassword,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (value) => value != null && value.length < 8
+
+                validator: (value) => value != null && value.length < 8 || value?.startsWith(RegExp(r'[A-Z]')) == false || value?.contains(RegExp(r'[0-9]')) == false
                     ? 'Минимум 8 символов, одна заглавная буква, одна цифра.'
                     : null,
                 decoration: InputDecoration(
                   border:  OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  helperText: "Минимум 8 символов, одна заглавная буква, одна цифра.",
+                  // helperText: "Минимум 8 символов, одна заглавная буква, одна цифра.",
                   hintText: 'Пароль',
+                  label: Text('Пароль'),
                   suffix: InkWell(
                     onTap: togglePasswordView,
                     child: Icon(
@@ -146,19 +178,22 @@ class _SignUpScreen extends State<SignUpScreen> {
                 ),
               ),
               const SizedBox(height: 30),
+
+              //Повтор пароля
               TextFormField(
                 autocorrect: false,
                 controller: passwordTextRepeatInputController,
                 obscureText: isHiddenPassword,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (value) => value != null && value.length < 6
-                    ? 'Минимум 6 символов'
+                validator: (value) => value != null &&  value != passwordTextInputController.text  
+                    ? 'Пароли должны совпадать'
                     : null,
                 decoration: InputDecoration(
                   border:  OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   hintText: 'Повторите пароль',
+                  label: Text('Пароль'),
                   suffix: InkWell(
                     onTap: togglePasswordView,
                     child: Icon(
