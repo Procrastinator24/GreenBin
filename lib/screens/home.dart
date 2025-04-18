@@ -1,16 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../widgets/CustomButton.dart';
 import '../screens/login_screen.dart';
 import '../screens/sign_in.dart';
 
 
-class Home_screen extends StatelessWidget {
-  const Home_screen({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
   @override
   Widget build (BuildContext context){
+    final user = FirebaseAuth.instance.currentUser;
     return Scaffold(
             body:
-            Row(
+            Row( 
                 mainAxisAlignment: MainAxisAlignment.center,
             children: [
                 Column(
@@ -49,7 +51,7 @@ class Home_screen extends StatelessWidget {
                               onPressed: ()=>{
                               Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const Login_screen()),
+                              MaterialPageRoute(builder: (context) => const LoginScreen()),
                             )
                             }, 
                            ),

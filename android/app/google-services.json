@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "125588806853",
+    "project_id": "greenbin-a6432",
+    "storage_bucket": "greenbin-a6432.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:125588806853:android:41ccdb2868bc4d6cf5e4ac",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBf2_DxHaTJDYIxHSG7szQT1KTyJQazt6g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
