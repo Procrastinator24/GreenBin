@@ -1,16 +1,39 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/screens/account_screen.dart';
 import '../widgets/CustomButton.dart';
 import '../screens/login_screen.dart';
-import '../screens/sign_in.dart';
+import 'package:flutter_application_3/screens/sign_up_screen.dart';
+
 
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
   @override
   Widget build (BuildContext context){
     final user = FirebaseAuth.instance.currentUser;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: const Text('Главная страница'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              if ((user == null)){
+                Navigator.push(context, 
+                MaterialPageRoute(builder: (context) => const LoginScreen()),);
+              }else {
+                Navigator.push(context,
+                 MaterialPageRoute(builder: (context) => const AccountScreen()),);
+              }
+            }, 
+            icon: Icon(
+              Icons.person,
+              color: (user==null) ? Colors.white : Colors.amber,
+            ))
+        ],
+      ),
             body:
             Row( 
                 mainAxisAlignment: MainAxisAlignment.center,

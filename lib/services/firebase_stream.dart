@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/screens/home.dart';
-import 'package:flutter_application_3/screens/sign_in.dart';
+import 'package:flutter_application_3/screens/sign_up_screen.dart';
 import 'package:flutter_application_3/screens/verify_email_screen.dart';
 
 
@@ -22,7 +22,8 @@ class FirebaseStream extends StatelessWidget{
             ),
             );
         } else if (snapshot.hasData) {
-          if (snapshot.data!.emailVerified == false) {
+          if (!snapshot.data!.emailVerified) {
+            // return const HomeScreen();
             return const VerifyEmailScreen(); // User is signed in but email is not verified
           }
           return const HomeScreen(); // User is signed in
