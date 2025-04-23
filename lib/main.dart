@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/screens/sign_up_screen.dart';
-import 'package:flutter_application_3/screens/verify_email_screen.dart';
+import 'package:flutter_application_3/screens/registration_and_login/sign_up_screen.dart';
+import 'package:flutter_application_3/screens/registration_and_login/verify_email_screen.dart';
 import 'screens/home.dart';
-import 'screens/login_screen.dart';
+import 'screens/registration_and_login/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_application_3/services/firebase_stream.dart';
-import 'package:flutter_application_3/screens/reset_password_screen.dart';
+import 'package:flutter_application_3/screens/registration_and_login/reset_password_screen.dart';
 
 
 Future<void> main() async{

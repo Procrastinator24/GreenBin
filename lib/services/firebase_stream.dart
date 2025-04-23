@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/screens/home.dart';
-import 'package:flutter_application_3/screens/sign_up_screen.dart';
-import 'package:flutter_application_3/screens/verify_email_screen.dart';
+import 'package:flutter_application_3/screens/registration_and_login/sign_up_screen.dart';
+import 'package:flutter_application_3/screens/registration_and_login/verify_email_screen.dart';
 
 
 class FirebaseStream extends StatelessWidget{

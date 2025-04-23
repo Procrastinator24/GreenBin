@@ -13,6 +13,11 @@ class LoginScreen extends StatefulWidget{
 class _LoginScreen extends State<LoginScreen>{
   bool _isHiddenPassword = true;
 
+  bool _isValidEmail = false;
+  bool _isValidPassword = false;
+  bool _isTouchedEmail = false;
+  bool _isTouchedPassword = false;
+
   TextEditingController emailTextInputController = TextEditingController();
   TextEditingController passwordTextInputController = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -23,6 +28,24 @@ class _LoginScreen extends State<LoginScreen>{
     emailTextInputController.dispose();
     passwordTextInputController.dispose();
     super.dispose();
+  }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   emailTextInputController.addListener(_validateInputEmail);
+  //   passwordTextInputController.addListener(_validateInputPassword);
+  // }
+
+  bool _validateInputPassword(String password){
+      if ( password.length >= 8 && password.startsWith(RegExp(r'[A-Z]')) == true && password.contains(RegExp(r'[0-9]')) == true){
+        return true;
+      }
+      return false;
+  }
+
+  bool _validateInputEmail(String value){
+    return EmailValidator.validate(value);
   }
 
   void togglePasswordView() {
@@ -69,14 +92,28 @@ class _LoginScreen extends State<LoginScreen>{
     );
   }
 
+  Color _getFillColorEmail() {
+    if (!_isTouchedEmail) return Colors.grey.shade100;
+    return _isValidEmail ? Colors.green.shade50 : Colors.red.shade50;
+  }
 
+  Color _getFillColorPassword() {
+    if (!_isTouchedPassword) return Colors.grey.shade100;
+    return _isValidPassword ? Colors.green.shade50 : Colors.red.shade50;
+  }
   @override
   Widget build(BuildContext context){
     return MaterialApp(
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: const Text("Войти")
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            }, 
+            icon: const Icon(Icons.arrow_back,)
+            ),
+          title: const Text("Вход")
         ),
         body: Padding(
           padding: const EdgeInsets.all(30.0),
@@ -86,14 +123,23 @@ class _LoginScreen extends State<LoginScreen>{
               children: [
                 // Блок ввода Email
                 TextFormField(
+                  onChanged: (value){
+                    setState(() {
+                      _isValidEmail = _validateInputEmail(value);
+                      _isTouchedEmail = true;
+                    });
+                  },
                   keyboardType: TextInputType.emailAddress,
                   autocorrect: false,
                   controller: emailTextInputController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (email) =>
                     email != null && !EmailValidator.validate(email)
-                      ? 'Введите корректный email'
+                      ? 'Некорректный адрес'
                       : null,
                   decoration: InputDecoration(
+                    fillColor: _getFillColorEmail(),
+                    filled: true,
                     labelText: 'Email',
                     hintText: 'Введите ваш email',
                     border: OutlineInputBorder(
@@ -102,10 +148,16 @@ class _LoginScreen extends State<LoginScreen>{
                     
                   ),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 12),
                 
                 // Блок ввода пароля
                 TextFormField(
+                  onChanged: (value){
+                    setState(() {
+                      _isValidPassword = _validateInputPassword(value);
+                      _isTouchedPassword = true;
+                    });
+                  },
                   autocorrect: false,
                   controller: passwordTextInputController,
                   obscureText: _isHiddenPassword,
@@ -114,45 +166,66 @@ class _LoginScreen extends State<LoginScreen>{
                     : null,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
+                    filled: true,
+                    fillColor: _getFillColorPassword(),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    hintText: 'Введите пароль',
+                    hintText: 'Пароль',
                     suffix: InkWell(
                       onTap: togglePasswordView,
                       child: Icon(
                         _isHiddenPassword
                           ? Icons.visibility_off
                           : Icons.visibility,
-                        color: Colors.black,
+                        color: Colors.grey,
                       )
                     )
                   ),
                 ),
                 const SizedBox(height: 30),
 
-                // Конпа ВОЙТИ 
-                ElevatedButton(
-                  onPressed: login, 
-                  child: const Center(child: Text('Войти'),)
+                TextButton(
+                  onPressed: () =>
+                    Navigator.of(context).pushNamed('/reset_password'),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: 
+                      Text('Забыли пароль?', 
+                      style: TextStyle(
+                        color: Color(0xff005e63),
+                        fontSize: 16),),
+                  ),
+
                 ),
-                const SizedBox(height: 30),
+                // Кнопка ВОЙТИ 
+                ElevatedButton(
+                  onPressed: login,
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                    shape: RoundedRectangleBorder(      // форма кнопки
+                          borderRadius: BorderRadius.circular(16),
+                    ),
+
+                    backgroundColor: _isValidEmail && _isValidPassword ? Color(0xff00858c) : Color(0xffedf1f2),
+                    foregroundColor: _isValidEmail && _isValidPassword ? Colors.white : Color(0xff7d7f80)
+                  ),
+                  child: const Center(child: Text('Войти', style: TextStyle(fontSize: 20),),)
+                ),
+                const SizedBox(height: 5),
 
                 TextButton(
                   onPressed: () => Navigator.of(context).pushNamed('/signup'), 
                   child: const Text(
-                    'Регистрация',
+                    'Зарегистрироваться',
                     style: TextStyle(
-                      decoration: TextDecoration.underline,
+                      fontSize: 16,
+                      color: Color(0xff00858c),
                     ),
                   )
                 ),
                 
-                TextButton(
-                  onPressed: () =>
-                    Navigator.of(context).pushNamed('/reset_password'),
-                  child: const Text('Сбросить пароль'),
-                ),
+                
                   
               ],
             )
