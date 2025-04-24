@@ -49,7 +49,6 @@ class _SignUpScreen extends State<SignUpScreen> {
   //Функция регистрации через Firebase
   Future<void> signUp() async {
     final navigator = Navigator.of(context);
-    print('Я тут');
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
 

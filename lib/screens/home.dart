@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_3/screens/mainPageScreens/main_page_screen_base.dart';
 import 'package:flutter_application_3/screens/registration_and_login/account_screen.dart';
 import '../widgets/CustomButton.dart';
 import 'registration_and_login/login_screen.dart';
@@ -13,7 +14,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build (BuildContext context){
     final user = FirebaseAuth.instance.currentUser;
-    return Scaffold(
+    // user != null ? MainScreen()  :
+
+    if (user != null){
+      return MainPageBase();
+    }
+    return  Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         actions: [
@@ -33,7 +39,7 @@ class HomeScreen extends StatelessWidget {
             ))
         ],
       ),
-            body:
+            body: 
             Row( 
                 mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -111,8 +117,8 @@ class HomeScreen extends StatelessWidget {
                     ],)
                     
                     ],)
-            );
+          );
 
-}
+  }
 
 }
