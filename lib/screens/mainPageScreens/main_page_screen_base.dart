@@ -16,10 +16,10 @@ class _MainPageBase extends State<MainPageBase>{
   int _selectedIndex = 0;
 
   final List<Widget> _screens = [
-    MainScreen(), 
+    MainScreen(), //Главная страница
     MainScreen(), 
     MainScreen(),
-    AccountScreen(),
+    AccountScreen(), // Страница пользователя
   ];
 
   @override

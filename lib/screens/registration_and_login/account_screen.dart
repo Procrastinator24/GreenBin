@@ -60,7 +60,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
     navigator.pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
   }
-
+  
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart' as carousel;
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_3/screens/registration_and_login/account_screen.dart';
+import 'package:flutter_application_3/services/get_user_data.dart';
 
 class MainScreen extends StatefulWidget{
   const MainScreen({super.key});
@@ -13,7 +13,23 @@ class MainScreen extends StatefulWidget{
 
 class _MainScreenState extends State<MainScreen>{
   final user = FirebaseAuth.instance.currentUser;
+  final userService = UserService();
+  UserModel? userData;
+  UserModel? userData1;
 
+  @override
+  void initState(){
+    super.initState();
+    loadUser();
+  }
+  Future<void> loadUser() async {
+    
+    userData =  await userService.getUser(user?.uid ?? '123');
+    setState(() {
+      userData1 = userData;
+    });
+
+  }
 
 
   @override
@@ -22,10 +38,16 @@ class _MainScreenState extends State<MainScreen>{
       appBar: AppBar(
         
         leading: IconButton(
+          color: Color(0xff005E63),
+          style: IconButton.styleFrom(
+            backgroundColor: Color(0xffDEEFF3)
+          ),
           onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountScreen()));
-          }, icon: const Icon(Icons.person)),
-        title: Text('Пользователь'), //заглушка  
+          }, icon: const Icon(
+                        Icons.person_2_outlined, 
+                        size: 25, )),
+        title: Text(userData1?.name ?? 'Загрузка...'), //заглушка  
       ),
       body:Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
        child:  SingleChildScrollView(
@@ -51,39 +73,8 @@ class _MainScreenState extends State<MainScreen>{
             autoPlay: true,
             autoPlayInterval: Duration(seconds: 3),
           )),
-          // SizedBox(
-          //   height: 280,  
-          //   child:
-          //   //Верхний скроллер  
-          //   ListView.builder(
-          //     // physics: const ScrollPh,
-          //     scrollDirection: Axis.horizontal,
-          //     itemCount: 5,
-          //     itemBuilder: (context, index){
-          //     return Padding(
-          //     padding: EdgeInsets.all(5), 
-          //     child: Container(
-          //       width: 200,
-          //       height: 280,
-                
-          //       decoration: BoxDecoration(
-          //         color: Color(0xffDEEFF3),
-          //         borderRadius: BorderRadius.circular(12.0)
-          //       ),
-          //       child: Padding(
-          //         padding: EdgeInsets.fromLTRB(10,0,10,30), 
-          //         child: Align(
-          //           alignment:  Alignment.bottomCenter, 
-          //           child: Text('Какой пластик \nподдается переработке?', 
-          //             style: TextStyle(
-          //               fontSize: 14,
-          //               fontWeight: FontWeight.bold),),)),
-          //       ),
-          //       ); 
-          //     })
-          // ),
+  
           SizedBox(height: 10,),
-
           Align(
             alignment: Alignment.centerLeft, 
             child:
@@ -124,6 +115,7 @@ class _MainScreenState extends State<MainScreen>{
             //Мидл скроллер  
               
           ),
+          
           SizedBox(height: 10,),
           Align(
             alignment: Alignment.centerLeft, 
@@ -181,6 +173,8 @@ class _MainScreenState extends State<MainScreen>{
       )   
     );
   }
+
+  // Метод вывода карточек в верхнем скроллере
   Widget _buildCarouselItem(String text) {
   return Container(
     width: 200,
@@ -204,6 +198,7 @@ class _MainScreenState extends State<MainScreen>{
       );
     }
 
+  //Метод вывода карточек пунктов приема
   Widget _buildMiniButton(String label){
     return Column(
       children: [
@@ -227,22 +222,7 @@ class _MainScreenState extends State<MainScreen>{
         ,),
       ],
     );
-  //   return TextButton(
-  //   onPressed: () {},
-  //   style: TextButton.styleFrom(
-  //     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-  //     backgroundColor: Colors.blue[100],
-  //     foregroundColor: Colors.blue[900],
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.circular(12),
-  //     ),
-  //     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-  //   ),
-  //   child: Text(
-  //     label,
-  //     style: TextStyle(fontSize: 14),
-  //   ),
-  // ); 
+  
   } 
 }
 
