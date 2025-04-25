@@ -24,7 +24,6 @@ class _MainPageBase extends State<MainPageBase>{
 
   @override
   Widget build(BuildContext context){
-    int _currentIndex = 0;
 
       return Scaffold(
         body: _screens[_selectedIndex],

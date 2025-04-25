@@ -50,8 +50,6 @@ class _AccountScreenState extends State<AccountScreen> {
         _isLoading = false;
       });
     }
-
-
   }
   Future<void> signOut() async {
     final navigator = Navigator.of(context);
@@ -77,36 +75,115 @@ class _AccountScreenState extends State<AccountScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back, // add custom icons also
-          ),
+        
+        leading: Padding(
+          padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
+          child: IconButton(
+            color: Color(0xff005E63),
+            style: IconButton.styleFrom(
+              backgroundColor: Color(0xffDEEFF3),
+              
+
+            ),
+            onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountScreen()));
+            }, icon: const Icon(
+                          Icons.person_2_outlined, 
+                          size: 31, )),
         ),
-        title: const Text('Аккаунт'),
+        title: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(_userData!['name'], style: TextStyle(fontSize: 28)),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(_currentUser!.email ?? 'Загрузка...', style: TextStyle(fontSize: 14, color: Color(0xff4b4c4d)), ),
+            )
+          ],
+        ),  
         actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () => signOut(),
-          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: IconButton(
+              onPressed: (){}, icon: Icon(Icons.create_outlined, size: 31,)),
+          )
         ],
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Ваше имя: ${_userData!['name']}',
-             style: Theme.of(context).textTheme.headlineLarge,),
-            const SizedBox(height: 8,),
-            Text('Ваш Email: ${_currentUser!.email}'),
-            const SizedBox(height: 8,),
-            TextButton(
-              onPressed: () => signOut(),
-              child: const Text('Выйти'),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 33, 16, 22),
+          child: Column(
+
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              //Изменение пользовательских данных 
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xffBCE6e6),
+                  foregroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(    // форма (например, скруглённые углы)
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 18),
+                ),
+                onPressed: (){}, 
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Icon(Icons.settings_outlined, size: 26,),
+                    SizedBox(width: 10,),
+                    Text("Мои данные", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
+                    Spacer(flex: 1,),
+                    Icon(Icons.navigate_next_outlined, size: 26)
+                  ],
+                ) ),
+              
+              SizedBox(height: 16,),
+
+              // Сменить пароль
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xffBCE6e6),
+                  foregroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(    // форма (например, скруглённые углы)
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 18),
+                ),
+                onPressed: (){}, 
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Icon(Icons.create_outlined, size: 26,),
+                    SizedBox(width: 10,),
+                    Text("Сменить пароль", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),),
+                    Spacer(flex: 1,),
+                    Icon(Icons.navigate_next_outlined, size: 26)
+                  ],
+                ) ),
+              Spacer(),  
+              ElevatedButton(
+                onPressed: () => signOut(),
+                
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    side: BorderSide(
+                      color:Color(0xff00858C),
+                    )
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 14, horizontal: 91),
+                  backgroundColor: Colors.white,
+                  foregroundColor: Color(0xff00858C),
+                ), 
+                child: Text('Выйти из аккаунта', style: TextStyle(fontSize: 16),))
+            ],
+          ),
         ),
       ),
     );
