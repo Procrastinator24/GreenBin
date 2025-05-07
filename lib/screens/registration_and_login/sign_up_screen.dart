@@ -269,6 +269,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                         valueListenable: _termsAccepted,
                         builder: (context, value, child) {
                           return Checkbox(
+                            checkColor: Color(0xff005E63),
                             value: value,
                             onChanged: (bool? newValue) {
                               _termsAccepted.value = newValue ?? false;
@@ -276,7 +277,7 @@ class _SignUpScreen extends State<SignUpScreen> {
                           );
                         },
                       ),
-                      Text('Принять условия соглашения'),
+                      Text('Принимаю условия \nпользовательского соглашения'),
                     ],),
 
                 //Реактивная кнопочка регистрации    
@@ -287,8 +288,8 @@ class _SignUpScreen extends State<SignUpScreen> {
                           onPressed: signUp,
                           // onPressed: value ? () => signUp : null,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: value ? Colors.blue : Colors.grey,
-                            foregroundColor: value ? Colors.white : Colors.black,
+                            backgroundColor: value ? Color(0xff00858C) : Color(0xffEDF1F2),
+                            foregroundColor: value ? Colors.white : Color(0xff7D7f80),
                             minimumSize: Size(180, 50)
                           ),
                           child: const Center(child: Text('Зарегистрироваться',
@@ -304,13 +305,13 @@ class _SignUpScreen extends State<SignUpScreen> {
                 
                 const SizedBox(height: 1),
                 TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () => Navigator.of(context).pushNamed('/login'),
                   child: const Text(
                     'Войти',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blueAccent,
+                      color: Color(0xff00858C)
                     ),
                   ),
                 ),

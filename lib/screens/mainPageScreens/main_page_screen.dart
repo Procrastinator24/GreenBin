@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart' as carousel;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_application_3/screens/registration_and_login/account_screen.dart';
+import 'package:flutter_application_3/screens/userScreens/account_screen.dart';
 import 'package:flutter_application_3/services/get_user_data.dart';
 
 class MainScreen extends StatefulWidget{

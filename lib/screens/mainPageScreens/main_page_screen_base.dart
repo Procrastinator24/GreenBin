@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/screens/mainPageScreens/main_page_screen.dart';
-import 'package:flutter_application_3/screens/registration_and_login/account_screen.dart';
+import 'package:flutter_application_3/screens/userScreens/account_screen.dart';
 
 class MainPageBase  extends StatefulWidget{
   const MainPageBase({super.key});

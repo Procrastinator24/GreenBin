@@ -4,20 +4,33 @@ class UserModel {
   final String uid;
   final String name;
   final String email;
-  
+  final DateTime createdAt;
   UserModel(
     {
       required this.uid,
       required this.name,
-      required this.email
+      required this.email,
+      required this.createdAt,
     }
   );
 
+
+  factory UserModel.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+    final data = snapshot.data()!;
+    return UserModel(
+      uid: snapshot.id,
+      email: data['email'] ?? '',
+      name: data['name'] ?? 'No name',
+      createdAt: (data['createdAt'] as Timestamp).toDate(),
+    );
+  }
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       uid: json['uid'] ?? '',
       name: json['name'] ?? '',
       email: json['email'] ?? '',
+      createdAt: (json['createdAt'] as Timestamp).toDate(),
+
     );
   }
 
@@ -26,6 +39,7 @@ class UserModel {
       'uid': uid,
       'name': name,
       'email': email,
+      'createdAt': Timestamp.fromDate(createdAt),
     };
   }
 }

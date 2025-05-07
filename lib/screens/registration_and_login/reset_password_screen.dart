@@ -66,7 +66,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('Сброс пароля'),
+        title: const Text('Забыли пароль?'),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            }, 
+            icon: const Icon(Icons.arrow_back,)
+            ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(30.0),
@@ -74,6 +80,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           key: formKey,
           child: Column(
             children: [
+              Text("Введите адрес вашей электронной почты, мы отправим на неё код для подтверждения аккаунта",
+              maxLines: 3,
+              style: TextStyle(
+                fontSize: 16
+              ),),
+              const SizedBox(height: 15),
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
                 autocorrect: false,
@@ -82,15 +94,27 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     email != null && !EmailValidator.validate(email)
                         ? 'Введите правильный Email'
                         : null,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Введите Email',
+                decoration:  InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  hintText: 'Email',
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 15),
               ElevatedButton(
                 onPressed: resetPassword,
-                child: const Center(child: Text('Сбросить пароль')),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xffEDF1F2),
+                  foregroundColor: Color(0xff7d7f80),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    vertical: 14,
+                  ) 
+                ),
+                child: const Center(child: Text('Отправить код')),
               ),
             ],
           ),
