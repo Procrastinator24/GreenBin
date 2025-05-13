@@ -1,7 +1,10 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_application_3/screens/mainPageScreens/main_page_screen_base.dart';
+import 'package:flutter_application_3/screens/userScreens/BloC/auth_bloc.dart';
 import 'package:flutter_application_3/services/snack_bar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatefulWidget{
   const LoginScreen({super.key});
@@ -60,13 +63,27 @@ class _LoginScreen extends State<LoginScreen>{
     if (!isValid) return;
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final auth = FirebaseAuth.instance;
+      await auth.signInWithEmailAndPassword(
         email: emailTextInputController.text.trim(),
         password: passwordTextInputController.text.trim(),
       );
-      navigator.pushNamed('/home');
+    
+      // Получаем AuthBloc из контекста
+      final authBloc = context.read<AuthBloc>();
+    
+      // Обновляем состояние AuthBloc
+      authBloc.add(AuthLoggedIn(auth.currentUser!.uid));
+      
+      navigator.pushReplacement(
+        MaterialPageRoute(builder: (context) => MainPageBase()),
+      );
     } on FirebaseAuthException catch (e) {
-      print(e.code);
+      SnackBarService.showSnackBar(
+          context,
+          '$e',
+          true,
+        );
       
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
         SnackBarService.showSnackBar(
@@ -86,10 +103,10 @@ class _LoginScreen extends State<LoginScreen>{
     } catch (e) {
       print(e);
     }
-    navigator.pushNamedAndRemoveUntil(
-      '/home',
-      (Route<dynamic> route) => false,
-    );
+    // navigator.pushNamedAndRemoveUntil(
+    //   '/home',
+    //   (Route<dynamic> route) => false,
+    // );
   }
 
   Color _getFillColorEmail() {

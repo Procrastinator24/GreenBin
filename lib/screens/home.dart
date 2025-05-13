@@ -13,29 +13,20 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build (BuildContext context){
-    final user = FirebaseAuth.instance.currentUser;
-    // user != null ? MainScreen()  :
 
-    if (user != null){
-      return MainPageBase();
-    }
+    
     return  Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {
-              if ((user == null)){
-                Navigator.push(context, 
-                MaterialPageRoute(builder: (context) => const LoginScreen()),);
-              }else {
-                Navigator.push(context,
-                 MaterialPageRoute(builder: (context) => const AccountScreen()),);
-              }
+            onPressed: () {              
+              Navigator.push(context, 
+              MaterialPageRoute(builder: (context) => const LoginScreen()),);
             }, 
             icon: Icon(
               Icons.person,
-              color: (user==null) ? Colors.grey : Colors.amber,
+              color: Colors.grey,
             ))
         ],
       ),

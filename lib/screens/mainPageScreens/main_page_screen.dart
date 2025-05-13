@@ -25,6 +25,7 @@ class _MainScreenState extends State<MainScreen>{
   Future<void> loadUser() async {
     
     userData =  await userService.getUser(user?.uid ?? '123');
+    if (!mounted) return;
     setState(() {
       userData1 = userData;
     });
