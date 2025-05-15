@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/screens/userScreens/BloC/auth_bloc.dart';
-import 'package:flutter_application_3/screens/userScreens/BloC/event.dart';
-import 'package:flutter_application_3/screens/userScreens/BloC/state.dart';
-import 'package:flutter_application_3/services/get_user_data.dart';
+import 'package:flutter_application_3/features/user/data/models/user_model.dart';
+import 'package:flutter_application_3/features/user/presentation/bloc/auth_bloc.dart';
+import 'package:flutter_application_3/features/user/presentation/bloc/user_event.dart';
+import 'package:flutter_application_3/features/user/presentation/bloc/user_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
@@ -58,7 +58,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     }
 
     final user = UserModel.fromFirestore(snapshot);
-    print('Получен пользователь: ${user.name}');
+    // print('Получен пользователь: ${user.name}');
     add(UserUpdatedEvent(user));
   } catch (e) {
     emit(UserError('Ошибка обработки данных: ${e.toString()}'));

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../services/snack_bar.dart';
+import '../../../../core/utils/snack_bar.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

@@ -1,9 +1,9 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_application_3/screens/mainPageScreens/main_page_screen_base.dart';
-import 'package:flutter_application_3/screens/userScreens/BloC/auth_bloc.dart';
-import 'package:flutter_application_3/services/snack_bar.dart';
+import 'package:flutter_application_3/features/main/presentation/screens/main_page_screen_base.dart';
+import 'package:flutter_application_3/core/utils/snack_bar.dart';
+import 'package:flutter_application_3/features/user/presentation/bloc/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatefulWidget{

@@ -1,12 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/screens/mainPageScreens/main_page_screen_base.dart';
-import 'package:flutter_application_3/screens/userScreens/account_screen.dart';
-import '../widgets/CustomButton.dart';
-import 'registration_and_login/login_screen.dart';
-import 'package:flutter_application_3/screens/registration_and_login/sign_up_screen.dart';
-
-
+import 'package:flutter_application_3/core/widgets/CustomButton.dart';
+import 'package:flutter_application_3/features/auth/presentation/screens/login_screen.dart';
+import 'package:flutter_application_3/features/auth/presentation/screens/sign_up_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

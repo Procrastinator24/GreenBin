@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart' as carousel;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_application_3/screens/userScreens/account_screen.dart';
-import 'package:flutter_application_3/services/get_user_data.dart';
+import 'package:flutter_application_3/features/user/data/models/user_model.dart';
+import 'package:flutter_application_3/features/user/presentation/screens/account_screen.dart';
 
 class MainScreen extends StatefulWidget{
   const MainScreen({super.key});
@@ -44,7 +44,7 @@ class _MainScreenState extends State<MainScreen>{
             backgroundColor: Color(0xffDEEFF3)
           ),
           onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountScreen()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) =>  AccountScreen()));
           }, icon: const Icon(
                         Icons.person_2_outlined, 
                         size: 25, )),

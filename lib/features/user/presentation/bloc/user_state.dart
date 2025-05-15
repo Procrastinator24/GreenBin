@@ -1,4 +1,5 @@
-import 'package:flutter_application_3/services/get_user_data.dart';
+
+import 'package:flutter_application_3/features/user/data/models/user_model.dart';
 
 abstract class UserState {}
 

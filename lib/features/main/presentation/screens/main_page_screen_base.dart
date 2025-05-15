@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/screens/mainPageScreens/main_page_screen.dart';
-import 'package:flutter_application_3/screens/userScreens/BloC/auth_bloc.dart';
-import 'package:flutter_application_3/screens/userScreens/BloC/bloc.dart';
-import 'package:flutter_application_3/screens/userScreens/account_screen.dart';
+import 'package:flutter_application_3/features/main/presentation/screens/main_page_screen.dart';
+import 'package:flutter_application_3/features/user/presentation/bloc/auth_bloc.dart';
+import 'package:flutter_application_3/features/user/presentation/screens/account_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainPageBase extends StatefulWidget {
@@ -15,16 +14,16 @@ class MainPageBase extends StatefulWidget {
 class _MainPageBase extends State<MainPageBase> {
   int _selectedIndex = 0;
 
-  late final List<Widget> _screens;
+  late final List<WidgetBuilder> _screensBuilders;
 
   @override
   void initState() {
     super.initState();
-    _screens = [
-      MainScreen(),
-      const MainScreen(),
-      const MainScreen(),
-      AccountScreen(),
+    _screensBuilders = [
+      (context) => MainScreen(),
+      (context) => MainScreen(),
+      (context) => MainScreen(),
+      (context) => AccountScreen(),
     ];
   }
 
@@ -35,7 +34,7 @@ class _MainPageBase extends State<MainPageBase> {
         if (state is AuthAuthenticated){
           
         return Scaffold(
-          body: _screens[_selectedIndex],
+          body: _screensBuilders[_selectedIndex](context),
           bottomNavigationBar: NavigationBar(
             backgroundColor: Color(0xffF7FBFC),
             selectedIndex: _selectedIndex,
