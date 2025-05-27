@@ -9,8 +9,9 @@ final class MapLoading extends MapState {}
 
 class MapLoaded extends MapState {
   final MapMarker location;
+  final double zoom;
 
-  MapLoaded(this.location); 
+  MapLoaded(this.location, this.zoom); 
 }
 
 class MapError extends MapState {
