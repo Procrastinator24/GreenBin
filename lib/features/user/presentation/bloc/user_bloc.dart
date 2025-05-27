@@ -84,13 +84,26 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   Future<void> _updateProfile(UpdateUserProfileEvent event, Emitter<UserState> emit) async {
     if (state is! UserLoaded) return;
+    final currentUser = (state as UserLoaded).user;
 
+    emit(UserUpdating());
+    // final updatedUser = state.copyWith() 
     try {
+      final user = currentUser.copyWith(
+        name: (event.newName != null && event.newName!.isNotEmpty) ? event.newName : null,
+        email: (event.newEmail != null && event.newEmail!.isNotEmpty) ? event.newEmail: null,
+        phone: (event.newPhone != null && event.newPhone!.isNotEmpty) ? event.newPhone: null,
+        adress: (event.newAdress != null && event.newAdress!.isNotEmpty) ? event.newAdress: null,
+        );
       await _firestore.collection('users').doc(event.userId).update({
-        'name': event.newName,
-        // 'photoUrl': event.newPhotoUrl,
+        'name': user.name,
+        'email': user.email,
+        'phone': user.phone,
+        'adress': user.adress,
         'updatedAt': FieldValue.serverTimestamp(),
       });
+      emit(UserUpdateSuccess());
+      emit(UserLoaded(user));
     } catch (e) {
       _handleError(e, emit);
     }

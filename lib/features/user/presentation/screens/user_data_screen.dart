@@ -14,20 +14,39 @@ class UserDataScreen extends StatefulWidget {
 }
 
 class _UserDataScreenState extends State<UserDataScreen> {
-  TextEditingController nameControl = TextEditingController();
-  TextEditingController phoneControl = TextEditingController();
-  TextEditingController adressControl = TextEditingController();
+  late final TextEditingController _nameControl;
+  late final TextEditingController _phoneControl;
+  late final TextEditingController _adressControl;
+  
+
   final formKey = GlobalKey<FormState>();
   bool _hasLoadedUser = false;
   ProcessingWidgetViews processingWidgets = ProcessingWidgetViews();
   @override
   void dispose() {
-    nameControl.dispose();
-    phoneControl.dispose();
-    adressControl.dispose();
+    _nameControl.dispose();
+    _phoneControl.dispose();
+    _adressControl.dispose();
     super.dispose();
   }
   
+  @override
+  void initState(){
+    super.initState();
+
+    final userState = context.read<UserBloc>().state;
+    if (userState is UserLoaded){
+      _nameControl = TextEditingController(text: userState.user.name);
+      _phoneControl = TextEditingController(text: userState.user.phone);
+      _adressControl = TextEditingController(text: userState.user.adress);
+
+    }else{
+      _nameControl = TextEditingController();
+      _phoneControl = TextEditingController();
+      _adressControl = TextEditingController();
+
+    }
+  }
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -41,10 +60,55 @@ class _UserDataScreenState extends State<UserDataScreen> {
       }
     }
   }
+  // @override
+  // Widget build(BuildContext context){
+  //   return Scaffold(
+  //     body: SafeArea(child: 
+  //     Text("${context.read<UserBloc>().state}")),
+  //   );
+  // }
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UserBloc, UserState>(
-      
+    return BlocConsumer<UserBloc, UserState>(
+      listener: (context, state) {
+        if (state is UserUpdateSuccess){
+          showDialog(
+            context: context,
+           
+            builder: (context) => AlertDialog(
+              icon: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+
+                ),
+                child: Icon(Icons.done, color: Color(0xff00858C),),
+              ),
+              backgroundColor: Color(0xffDEEFF3),
+              title: Align(
+                alignment: Alignment.center,
+                child: Text('Пользователь обновен', style: TextStyle(
+                  fontSize: 16
+                ),)),
+              actions: [
+                Align(
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Color(0xff00858C),
+                    ),
+                    onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                    } , child: Text('Закрыть'),),
+                )
+              ],
+          ));
+        }
+      },
       builder: (context, state) {
         if (state is UserLoading || state is UserInitial){
           return processingWidgets.buildLoadingView();
@@ -73,8 +137,8 @@ class _UserDataScreenState extends State<UserDataScreen> {
                   Flexible(
                     flex: 1,
                     child: TextFormField(
-                      initialValue: state.user.name,
-                      controller: nameControl,
+                      // initialValue: state.user.name,
+                      controller: _nameControl,
                       keyboardType: TextInputType.name,
 
                       decoration: InputDecoration(
@@ -90,7 +154,7 @@ class _UserDataScreenState extends State<UserDataScreen> {
                   Flexible(
                     flex: 1,
                     child: TextFormField(
-                      controller: phoneControl,
+                      controller: _phoneControl,
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
                         labelText: 'Телефон',
@@ -106,7 +170,7 @@ class _UserDataScreenState extends State<UserDataScreen> {
                   Flexible(
                     flex: 1,
                     child: TextFormField(
-                      controller: adressControl,
+                      controller: _adressControl,
                       keyboardType: TextInputType.streetAddress,
                       decoration: InputDecoration(
                         labelText: 'Адресс',
@@ -123,7 +187,13 @@ class _UserDataScreenState extends State<UserDataScreen> {
                     width: 105,
                     label: "Сохранить изменения",
                     onPressed:
-                        () => SnackBar(content: Text('Еще разрабатывается')),
+                        () {
+                          context.read<UserBloc>().add(UpdateUserProfileEvent(userId: state.user.uid,
+                            newName: _nameControl.text,
+                            newPhone: _phoneControl.text,
+                            newAdress: _adressControl.text,
+                          ));
+                        },
                   ),
                   Spacer(flex: 2),
 

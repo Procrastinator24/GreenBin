@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_3/features/main/presentation/screens/main_page_screen_base.dart';
 import 'package:flutter_application_3/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:flutter_application_3/features/auth/presentation/screens/verify_email_screen.dart';
+import 'package:flutter_application_3/features/map/presentation/screens/map_screen.dart';
 import 'package:flutter_application_3/features/user/presentation/bloc/auth_bloc.dart';
 import 'package:flutter_application_3/features/user/presentation/screens/account_screen.dart';
 import 'package:flutter_application_3/features/user/presentation/screens/user_data_screen.dart';
@@ -12,7 +13,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_application_3/features/auth/presentation/screens/reset_password_screen.dart';
 import 'package:flutter_application_3/features/main/presentation/screens/main_page_screen.dart';
 import 'features/user/presentation/bloc/user_bloc.dart';
-
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(); 
@@ -64,6 +64,8 @@ class MyApp extends StatelessWidget{
             return MaterialPageRoute(builder: (context) => MainPageBase()); // Навигационная панель
           case '/user_data':
             return MaterialPageRoute(builder: (context) => UserDataScreen()); //Настройки пользователя
+          case '/map_screen':
+            return MaterialPageRoute(builder: (context) => MapScreen());
           default:
             return MaterialPageRoute(builder: (context) => MainPageBase());
         }

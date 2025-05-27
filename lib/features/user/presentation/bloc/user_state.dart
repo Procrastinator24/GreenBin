@@ -12,10 +12,19 @@ class UserLoaded extends UserState {
   UserLoaded(this.user);
 }
 
-class UserUpdated extends UserState {
-  final UserModel user;
-  UserUpdated(this.user);
+class UserUpdating extends UserState {}
+
+class UserUpdateSuccess extends UserState{
+
 }
+
+class UserUpdateFailure extends UserState{
+  final String message;
+
+  UserUpdateFailure(this.message);
+}
+
+
 class UserError extends UserState {
   final String message;
 

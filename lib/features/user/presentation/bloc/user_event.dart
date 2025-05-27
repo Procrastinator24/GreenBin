@@ -16,8 +16,12 @@ class UpdateUserNameEvent extends UserEvent {
 
 class UpdateUserProfileEvent extends UserEvent {
   final String userId;
-  final String newName;
-  UpdateUserProfileEvent(this.userId, this.newName);
+  final String? newName;
+  final String? newEmail;
+  final String? newPhone;
+  final String? newAdress;
+
+  UpdateUserProfileEvent({required this.userId, this.newName, this.newAdress, this.newEmail, this.newPhone});
 }
 
 class UserLoggedOut extends UserEvent {}
