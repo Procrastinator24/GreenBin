@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_3/features/main/presentation/screens/main_page_screen.dart';
 import 'package:flutter_application_3/features/map/presentation/screens/map_screen.dart';
+import 'package:flutter_application_3/features/tests/presentation/screens/test_screen.dart';
 import 'package:flutter_application_3/features/user/presentation/bloc/auth_bloc.dart';
 import 'package:flutter_application_3/features/user/presentation/screens/account_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +24,7 @@ class _MainPageBase extends State<MainPageBase> {
     _screensBuilders = [
       (context) => MainScreen(),
       (context) => MapScreen(),
-      (context) => MainScreen(),
+      (context) => TestScreen(),
       (context) => AccountScreen(),
     ];
   }

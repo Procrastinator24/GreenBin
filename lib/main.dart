@@ -13,6 +13,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_application_3/features/auth/presentation/screens/reset_password_screen.dart';
 import 'package:flutter_application_3/features/main/presentation/screens/main_page_screen.dart';
 import 'features/user/presentation/bloc/user_bloc.dart';
+import 'package:flutter_application_3/features/tests/presentation/screens/test_screen.dart';
+
+
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(); 
@@ -42,6 +45,8 @@ class MyApp extends StatelessWidget{
         primaryColor: Colors.blueAccent),
       onGenerateRoute: (settings){
         switch (settings.name) {
+          case '/tests':
+            return MaterialPageRoute(builder: (context) => TestScreen());
           case '/user_account':
             return MaterialPageRoute(builder: (context) => AccountScreen()); // Страница пользователя в NavigationBar
           case '/user_data_screen':
